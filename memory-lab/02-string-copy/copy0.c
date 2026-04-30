@@ -4,7 +4,9 @@
 // Notice that BOTH s and t get capitalized, even though we only changed t.
 //
 // TODO: Write a comment below explaining WHY this happens:
-// ANSWER: ...
+// ANSWER: Because string t = s; copies the address, not the actual string.
+// Both s and t point to the same place in memory, so changing t[0]
+// also changes s[0] — they are the same thing.
 
 #include <cs50.h>
 #include <ctype.h>
@@ -13,17 +15,17 @@
 
 int main(void)
 {
-    // Get a string
-    string s = get_string("s: ");
+   // Get a string
+   string s = get_string("s: ");
 
-    // This does NOT copy the string!
-    // It only copies the address — s and t now point to the same memory.
-    string t = s;
+   // This does NOT copy the string!
+   // It only copies the address — s and t now point to the same memory.
+   string t = s;
 
-    // Capitalize first letter of t
-    t[0] = toupper(t[0]);
+   // Capitalize first letter of t
+   t[0] = toupper(t[0]);
 
-    // Print both — are they different?
-    printf("s: %s\n", s);
-    printf("t: %s\n", t);
+   // Print both — are they different?
+   printf("s: %s\n", s);
+   printf("t: %s\n", t);
 }
