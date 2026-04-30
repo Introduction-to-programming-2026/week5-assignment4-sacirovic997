@@ -1,9 +1,3 @@
-// Homework – Memory Logger
-// Name: _______________
-// Date: _______________
-//
-// Read the README.md in this folder before starting!
-
 #include <cs50.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -14,70 +8,50 @@
 
 int main(void)
 {
-    // TODO: Declare an array of NUM_WORDS char* pointers
-    /* ??? */
+   char *words[NUM_WORDS];
 
-    // -------------------------------------------------------
-    // STEP 1 & 2: Read words and store copies in memory
-    // -------------------------------------------------------
-    for (int i = 0; i < NUM_WORDS; i++)
-    {
-        char *input = get_string("Enter word %i: ", i + 1);
+   for (int i = 0; i < NUM_WORDS; i++)
+   {
+       char *input = get_string("Enter word %i: ", i + 1);
 
-        // TODO: Allocate memory for a copy of input (+1 for '\0')
-        words[i] = malloc(/* ??? */);
+       words[i] = malloc(strlen(input) + 1);
 
-        // TODO: Check if malloc returned NULL
-        if (/* ??? */)
-        {
-            printf("Memory error!\n");
-            return 1;
-        }
+       if (words[i] == NULL)
+       {
+           printf("Memory error!\n");
+           return 1;
+       }
 
-        // TODO: Copy input into words[i]
-        strcpy(/* ??? */, /* ??? */);
+       strcpy(words[i], input);
 
-        // TODO: Capitalize the first letter of words[i]
-        if (strlen(words[i]) > 0)
-        {
-            words[i][0] = toupper(/* ??? */);
-        }
-    }
+       if (strlen(words[i]) > 0)
+       {
+           words[i][0] = toupper(words[i][0]);
+       }
+   }
 
-    // -------------------------------------------------------
-    // STEP 3: Save all words to log.txt
-    // -------------------------------------------------------
+   FILE *file = fopen("log.txt", "w");
 
-    // TODO: Open "log.txt" in write mode "w"
-    FILE *file = fopen(/* ??? */, /* ??? */);
+   if (file == NULL)
+   {
+       printf("Could not open file!\n");
+       return 1;
+   }
 
-    // TODO: Check if fopen returned NULL
-    if (/* ??? */)
-    {
-        printf("Could not open file!\n");
-        return 1;
-    }
+   for (int i = 0; i < NUM_WORDS; i++)
+   {
+       fprintf(file, "%s\n", words[i]);
+   }
 
-    // TODO: Write each word to the file followed by "\n"
-    for (int i = 0; i < NUM_WORDS; i++)
-    {
-        fprintf(file, /* ??? */, words[i]);
-    }
+   fclose(file);
 
-    // TODO: Close the file
-    /* ??? */
+   printf("\nWords saved to log.txt!\n");
 
-    printf("\nWords saved to log.txt!\n");
+   for (int i = 0; i < NUM_WORDS; i++)
+   {
+       free(words[i]);
+   }
 
-    // -------------------------------------------------------
-    // STEP 4: Free all allocated memory
-    // -------------------------------------------------------
-
-    // TODO: Free each word
-    for (int i = 0; i < NUM_WORDS; i++)
-    {
-        free(/* ??? */);
-    }
-
-    return 0;
+   return 0;
 }
+ 
